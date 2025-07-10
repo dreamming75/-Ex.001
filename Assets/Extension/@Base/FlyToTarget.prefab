@@ -53,14 +53,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FlyToTarget
   childPrefab: {fileID: 4192952893682874150, guid: 5575caa91be0c4788886444f4cf96f34, type: 3}
   childCount: 20
-  childSpawnDuration: 1
+  childSpawnDuration: 0.8
   target: {fileID: 6674395911090474411}
   flyDurationRange: {x: 0.8, y: 0.5}
   controlPointOffset: {x: 0, y: 3, z: 0}
   randomXRange: {x: -2, y: 2}
   randomYRange: {x: -3, y: -2}
-  minWaitBeforeFly: 1.5
-  maxWaitBeforeFly: 1.8
+  minWaitBeforeFly: 1.2
+  maxWaitBeforeFly: 1.35
   spawnRangeX: {x: -50, y: 50}
   spawnRangeY: {x: -50, y: 50}
   spawnRangeZ: {x: 0, y: 0}
@@ -275,8 +275,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC624\uBE0C\uC81D\uD2B8\uAC00 \uD2B9\uC815 \uD0C0\uAC9F\uC73C\uB85C \uB0A0\uC544\uAC10"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ce2f96111cc814e418840d27fecdb3ab, type: 2}
-  m_sharedMaterial: {fileID: -5560026006810170356, guid: ce2f96111cc814e418840d27fecdb3ab, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0487837e90bae48a29569663f355c765, type: 2}
+  m_sharedMaterial: {fileID: -5560026006810170356, guid: 0487837e90bae48a29569663f355c765, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
