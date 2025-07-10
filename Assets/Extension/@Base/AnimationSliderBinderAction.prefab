@@ -215,8 +215,8 @@ MonoBehaviour:
     \uB530\uB77C\uC634(\uC560\uB2C8\uBA54\uC774\uC158 \uB530\uB85C \uC904 \uC218
     \uC788\uC74C)"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ce2f96111cc814e418840d27fecdb3ab, type: 2}
-  m_sharedMaterial: {fileID: -5560026006810170356, guid: ce2f96111cc814e418840d27fecdb3ab, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0487837e90bae48a29569663f355c765, type: 2}
+  m_sharedMaterial: {fileID: -5560026006810170356, guid: 0487837e90bae48a29569663f355c765, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -575,6 +575,8 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 7dda437533d4a4952923446ce627ed23, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 7dda437533d4a4952923446ce627ed23, type: 2}
+  - {fileID: 7400000, guid: 870b5940f40244cf7b267a5d2809337f, type: 2}
+  - {fileID: 7400000, guid: a876cdbb428fd4fb3ad77e62480d736b, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
