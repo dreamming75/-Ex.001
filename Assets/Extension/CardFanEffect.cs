@@ -1,19 +1,9 @@
-//처음 등장 시 Start 애니메이션 (1회 실행)
-//펼치기 전에 Unfold_Start 실행 → 이후 위치/회전/스케일 트윈
-//펼치기 완료 시 Unfold_End
-//접기 완료 시 Fold_End
-//애니메이션 클립 이름을 인스펙터에서 자유롭게 설정 가능
-//자식 내부 콘텐츠 위치/회전 고정
-//DOTween의 이동/회전/스케일 각각 커브 지정 가능
-
-
-
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(RectTransform))]
-public class UICardFanEffect : MonoBehaviour
+public class CardFanEffect : MonoBehaviour
 {
     [Header("카드 배열 설정")]
     public float radius = 300f;
@@ -31,17 +21,17 @@ public class UICardFanEffect : MonoBehaviour
     public bool useSequentialDelay = true;
     public float perCardDelay = 0.05f;
 
-    [Header("애니메이션 커브")]
+    [Header("펼쳐질 때 애니메이션 커브")]
     public Ease positionEase = Ease.OutSine;
     public Ease rotationEase = Ease.OutSine;
     public Ease scaleEase = Ease.OutBack;
 
-    [Header("스케일 설정")]
+    [Header("펼쳐질 때 스케일 설정")]
     public bool useScaleAnimation = true;
     public Vector3 startScale = new Vector3(0.8f, 0.8f, 1f);
     public Vector3 endScale = Vector3.one;
 
-    [Header("간격 보정 (X축만)")]
+    [Header("펼쳐질 때 간격 보정 (X축만)")]
     [Range(0.1f, 3f)] public float spacingMultiplier = 1f;
 
     [Header("접기 설정")]
@@ -53,6 +43,10 @@ public class UICardFanEffect : MonoBehaviour
     public string unfoldStartClipName = "Unfold_Start";
     public string unfoldEndClipName = "Unfold_End";
     public string foldEndClipName = "Fold_End";
+
+    [Header("고정 간격 설정")]
+    public bool useFixedAngleStep = false;
+    public float fixedAngleStep = 15f;
 
     private List<RectTransform> cards = new List<RectTransform>();
     private bool isFolded = false;
@@ -105,8 +99,10 @@ public class UICardFanEffect : MonoBehaviour
         int count = cards.Count;
         if (count == 0) return;
 
-        float angleStep = (count == 1) ? 0f : maxAngle / (count - 1);
-        float startAngle = -maxAngle / 2f;
+        float angleStep = useFixedAngleStep ? fixedAngleStep : (count == 1 ? 0f : maxAngle / (count - 1));
+        float startAngle = useFixedAngleStep
+            ? -angleStep * (count - 1) / 2f
+            : -maxAngle / 2f;
 
         for (int i = 0; i < count; i++)
         {
@@ -128,7 +124,7 @@ public class UICardFanEffect : MonoBehaviour
 
             seq.AppendInterval(delay);
             seq.AppendCallback(() => PlayAnimation(card, unfoldStartClipName));
-            seq.AppendInterval(0.3f); // unfoldStart 애니메이션 길이 수동 지정
+            seq.AppendInterval(0.3f);
 
             seq.Join(card.DOAnchorPos(targetPos, animationDuration).SetEase(positionEase));
             seq.Join(card.DOLocalRotateQuaternion(targetRot, animationDuration).SetEase(rotationEase));
