@@ -1,5 +1,14 @@
+//처음 등장 시 Start 애니메이션 (1회 실행)
+//펼치기 전에 Unfold_Start 실행 → 이후 위치/회전/스케일 트윈
+//펼치기 완료 시 Unfold_End
+//접기 완료 시 Fold_End
+//애니메이션 클립 이름을 인스펙터에서 자유롭게 설정 가능
+//자식 내부 콘텐츠 위치/회전 고정
+//DOTween의 이동/회전/스케일 각각 커브 지정 가능
+
+
+
 using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections.Generic;
 
@@ -18,29 +27,28 @@ public class UICardFanEffect : MonoBehaviour
     public float initialSpacing = 30f;
 
     [Header("펼치기 딜레이")]
-    public float fanoutDelay = 0.0f;
-
-    [Header("애니메이션 옵션")]
+    public float fanoutDelay = 0f;
     public bool useSequentialDelay = true;
     public float perCardDelay = 0.05f;
+
+    [Header("애니메이션 커브")]
     public Ease positionEase = Ease.OutSine;
     public Ease rotationEase = Ease.OutSine;
     public Ease scaleEase = Ease.OutBack;
 
-    [Header("스케일 연출")]
+    [Header("스케일 설정")]
     public bool useScaleAnimation = true;
     public Vector3 startScale = new Vector3(0.8f, 0.8f, 1f);
     public Vector3 endScale = Vector3.one;
 
     [Header("간격 보정 (X축만)")]
-    [Range(0.1f, 3f)]
-    public float spacingMultiplier = 1f;
+    [Range(0.1f, 3f)] public float spacingMultiplier = 1f;
 
     [Header("접기 설정")]
     public Vector2 foldAnchoredPosition = Vector2.zero;
     public Vector3 foldEulerRotation = Vector3.zero;
 
-    [Header("애니메이션 클립 이름 설정")]
+    [Header("애니메이션 클립 이름")]
     public string startClipName = "Start";
     public string unfoldStartClipName = "Unfold_Start";
     public string unfoldEndClipName = "Unfold_End";
@@ -54,11 +62,8 @@ public class UICardFanEffect : MonoBehaviour
         RefreshCardList();
         ResetCardsToStartSpacing();
 
-        // 항상 Start 애니메이션 재생
         foreach (var card in cards)
-        {
             PlayAnimation(card, startClipName);
-        }
 
         if (autoUnfoldOnEnable)
             Invoke(nameof(Unfold), startDelay);
@@ -67,7 +72,6 @@ public class UICardFanEffect : MonoBehaviour
     void RefreshCardList()
     {
         cards.Clear();
-
         foreach (RectTransform t in GetComponentsInChildren<RectTransform>())
         {
             if (t.parent == transform)
@@ -108,8 +112,8 @@ public class UICardFanEffect : MonoBehaviour
         {
             float angle = startAngle + i * angleStep;
             float rad = angle * Mathf.Deg2Rad;
-
             Vector2 dir = new Vector2(Mathf.Sin(rad), Mathf.Cos(rad));
+
             Vector2 targetPos = dir * radius;
             targetPos.x *= spacingMultiplier;
 
@@ -124,7 +128,7 @@ public class UICardFanEffect : MonoBehaviour
 
             seq.AppendInterval(delay);
             seq.AppendCallback(() => PlayAnimation(card, unfoldStartClipName));
-            seq.AppendInterval(0.3f); // unfoldStart 애니메이션 길이
+            seq.AppendInterval(0.3f); // unfoldStart 애니메이션 길이 수동 지정
 
             seq.Join(card.DOAnchorPos(targetPos, animationDuration).SetEase(positionEase));
             seq.Join(card.DOLocalRotateQuaternion(targetRot, animationDuration).SetEase(rotationEase));
@@ -132,7 +136,6 @@ public class UICardFanEffect : MonoBehaviour
                 seq.Join(card.DOScale(endScale, animationDuration).SetEase(scaleEase));
 
             seq.OnComplete(() => OnCardUnfoldComplete(card));
-
             LockChildLocalTransform(card);
         }
 
@@ -147,19 +150,16 @@ public class UICardFanEffect : MonoBehaviour
             var card = cards[i];
 
             card.DOAnchorPos(foldAnchoredPosition, animationDuration)
-                .SetDelay(delay)
-                .SetEase(positionEase)
+                .SetDelay(delay).SetEase(positionEase)
                 .OnComplete(() => OnCardFoldComplete(card));
 
             Quaternion targetRot = Quaternion.Euler(foldEulerRotation);
             card.DOLocalRotateQuaternion(targetRot, animationDuration)
-                .SetDelay(delay)
-                .SetEase(rotationEase);
+                .SetDelay(delay).SetEase(rotationEase);
 
             if (useScaleAnimation)
                 card.DOScale(startScale, animationDuration)
-                    .SetDelay(delay)
-                    .SetEase(scaleEase);
+                    .SetDelay(delay).SetEase(scaleEase);
 
             LockChildLocalTransform(card);
         }
@@ -169,19 +169,8 @@ public class UICardFanEffect : MonoBehaviour
 
     public void Toggle()
     {
-        if (isFolded)
-            Unfold();
-        else
-            Fold();
-    }
-
-    void LockChildLocalTransform(RectTransform card)
-    {
-        foreach (Transform child in card)
-        {
-            child.localRotation = Quaternion.identity;
-            child.localPosition = Vector3.zero;
-        }
+        if (isFolded) Unfold();
+        else Fold();
     }
 
     void PlayAnimation(RectTransform card, string clipName)
@@ -201,5 +190,14 @@ public class UICardFanEffect : MonoBehaviour
     void OnCardFoldComplete(RectTransform card)
     {
         PlayAnimation(card, foldEndClipName);
+    }
+
+    void LockChildLocalTransform(RectTransform card)
+    {
+        foreach (Transform child in card)
+        {
+            child.localRotation = Quaternion.identity;
+            child.localPosition = Vector3.zero;
+        }
     }
 }
