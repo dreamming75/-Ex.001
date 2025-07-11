@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4818537613989615237}
   - component: {fileID: 4234105295548255432}
   m_Layer: 0
-  m_Name: FlyToTarget
+  m_Name: FlyObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1960593853937156948}
   - component: {fileID: 2989704036443515946}
   m_Layer: 0
-  m_Name: FlyToTarget_Target
+  m_Name: FlyTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

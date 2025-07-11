@@ -11,7 +11,7 @@ namespace H
         public Animation targetAnimation;
 
         [Header("다른 대상 애니메이션")]
-        public Animation otherTargetAnimation; // 다른 오브젝트의 애니메이션
+        public Animation otherTargetAnimation;
 
         [Header("Lerp 지속 시간 (초)")]
         public float duration = 0.1f;
@@ -40,17 +40,47 @@ namespace H
 
         private void Initialize()
         {
-            if (targetAnimation == null || targetAnimation.clip == null)
+            if (_initialized) return;
+
+            if (targetAnimation == null)
             {
-                Debug.LogError("대상 애니메이션 또는 클립이 없습니다.");
+                Debug.LogError("🎯 [AnimationSliderBinderAction] 대상 애니메이션(targetAnimation)이 설정되지 않았습니다.");
+                return;
+            }
+
+            if (targetAnimation.clip == null)
+            {
+                Debug.LogError("🎯 [AnimationSliderBinderAction] 대상 애니메이션 클립이 설정되지 않았습니다.");
                 return;
             }
 
             _state = targetAnimation[targetAnimation.clip.name];
             if (_state == null)
             {
-                Debug.LogError("애니메이션 상태를 찾을 수 없습니다.");
-                return;
+                targetAnimation.AddClip(targetAnimation.clip, targetAnimation.clip.name);
+                _state = targetAnimation[targetAnimation.clip.name];
+                if (_state == null)
+                {
+                    Debug.LogError($"🎯 [AnimationSliderBinderAction] 클립 '{targetAnimation.clip.name}' 을 대상 애니메이션에 등록할 수 없습니다.");
+                    return;
+                }
+            }
+
+            // 슬라이더용 대상에 클립 등록
+            if (increaseAnimationClip != null && targetAnimation[increaseAnimationClip.name] == null)
+                targetAnimation.AddClip(increaseAnimationClip, increaseAnimationClip.name);
+
+            if (decreaseAnimationClip != null && targetAnimation[decreaseAnimationClip.name] == null)
+                targetAnimation.AddClip(decreaseAnimationClip, decreaseAnimationClip.name);
+
+            // 효과용 대상에도 클립 등록
+            if (otherTargetAnimation != null)
+            {
+                if (increaseAnimationClip != null && otherTargetAnimation[increaseAnimationClip.name] == null)
+                    otherTargetAnimation.AddClip(increaseAnimationClip, increaseAnimationClip.name);
+
+                if (decreaseAnimationClip != null && otherTargetAnimation[decreaseAnimationClip.name] == null)
+                    otherTargetAnimation.AddClip(decreaseAnimationClip, decreaseAnimationClip.name);
             }
 
             _initialized = true;
@@ -61,83 +91,47 @@ namespace H
             if (!_initialized) Initialize();
             if (_state == null) return;
 
-            // 값이 증가하는지 감소하는지 체크
             bool isIncreasing = value > lastValue;
 
-            // 값에 따라 애니메이션 실행
+            // 증감 효과는 다른 대상에서 실행
             if (isIncreasing)
-            {
                 PlayIncreaseAnimation();
-            }
             else
-            {
                 PlayDecreaseAnimation();
-            }
 
             lastValue = value;
 
-            // 슬라이더 값에 맞춰 대상 애니메이션 실행
             float targetTime = Mathf.Clamp01(value / 100f);
 
-            // 이전 애니메이션을 중지
             if (_animationCoroutine != null)
                 StopCoroutine(_animationCoroutine);
 
             _animationCoroutine = StartCoroutine(AnimateToNormalizedTime(targetTime));
-            
-            // 다른 오브젝트의 애니메이션 실행
-            TriggerOtherAnimation(isIncreasing);
         }
 
         private void PlayIncreaseAnimation()
         {
-            // 증가 애니메이션이 설정되었으면 실행
-            if (increaseAnimationClip != null)
+            if (increaseAnimationClip != null && otherTargetAnimation != null)
             {
-                Debug.Log("값이 증가했습니다! 증가 애니메이션 실행...");
-                targetAnimation.Play(increaseAnimationClip.name);
+                Debug.Log("값이 증가했습니다! 증가 애니메이션 실행 (다른 오브젝트)...");
+                otherTargetAnimation.Play(increaseAnimationClip.name);
             }
             else
             {
-                Debug.LogWarning("증가 애니메이션 클립이 설정되지 않았습니다.");
+                Debug.LogWarning("증가 애니메이션 클립 또는 다른 대상 애니메이션이 설정되지 않았습니다.");
             }
         }
 
         private void PlayDecreaseAnimation()
         {
-            // 감소 애니메이션이 설정되었으면 실행
-            if (decreaseAnimationClip != null)
+            if (decreaseAnimationClip != null && otherTargetAnimation != null)
             {
-                Debug.Log("값이 감소했습니다! 감소 애니메이션 실행...");
-                targetAnimation.Play(decreaseAnimationClip.name);
+                Debug.Log("값이 감소했습니다! 감소 애니메이션 실행 (다른 오브젝트)...");
+                otherTargetAnimation.Play(decreaseAnimationClip.name);
             }
             else
             {
-                Debug.LogWarning("감소 애니메이션 클립이 설정되지 않았습니다.");
-            }
-        }
-
-        private void TriggerOtherAnimation(bool isIncreasing)
-        {
-            if (otherTargetAnimation == null) return;
-
-            if (isIncreasing)
-            {
-                // 값이 증가하면 다른 오브젝트의 애니메이션 실행
-                if (increaseAnimationClip != null)
-                {
-                    Debug.Log("다른 오브젝트의 증가 애니메이션 실행...");
-                    otherTargetAnimation.Play(increaseAnimationClip.name);
-                }
-            }
-            else
-            {
-                // 값이 감소하면 다른 오브젝트의 애니메이션 실행
-                if (decreaseAnimationClip != null)
-                {
-                    Debug.Log("다른 오브젝트의 감소 애니메이션 실행...");
-                    otherTargetAnimation.Play(decreaseAnimationClip.name);
-                }
+                Debug.LogWarning("감소 애니메이션 클립 또는 다른 대상 애니메이션이 설정되지 않았습니다.");
             }
         }
 
@@ -148,7 +142,7 @@ namespace H
 
             while (elapsed < duration)
             {
-                elapsed += Time.unscaledDeltaTime;  // UI라서 unscaledTime 추천
+                elapsed += Time.unscaledDeltaTime;
                 float t = Mathf.Clamp01(elapsed / duration);
                 float currentTime = Mathf.Lerp(start, targetNormalizedTime, t);
 
@@ -161,7 +155,6 @@ namespace H
                 yield return null;
             }
 
-            // 마지막 값 보정
             _state.enabled = true;
             _state.normalizedTime = targetNormalizedTime;
             targetAnimation.Sample();
