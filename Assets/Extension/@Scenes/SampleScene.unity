@@ -1587,6 +1587,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NumCount
       objectReference: {fileID: 0}
+    - target: {fileID: 344786867517739991, guid: 0cba76c0aea8042d7b8eb0bef6573152, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8825199145773749800, guid: 0cba76c0aea8042d7b8eb0bef6573152, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1700,7 +1704,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 195563391174367901, guid: a8734ebcdd600493a89a3b9c6b7c5f87, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1551457802786063210, guid: a8734ebcdd600493a89a3b9c6b7c5f87, type: 3}
       propertyPath: decreaseAnimationClip
@@ -1720,7 +1724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6988458039148765329, guid: a8734ebcdd600493a89a3b9c6b7c5f87, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7943968458861561458, guid: a8734ebcdd600493a89a3b9c6b7c5f87, type: 3}
       propertyPath: m_Animations.Array.size
@@ -2020,6 +2024,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyToTarget
       objectReference: {fileID: 0}
+    - target: {fileID: 8780942545884784893, guid: c1dea4e539fd34ea68584a970a084c55, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2255,6 +2263,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spritedissolve
       objectReference: {fileID: 0}
+    - target: {fileID: 7164115625016229883, guid: f2aad15c2be3a4436b7c3dfa7f072f6b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9143584710938897097, guid: f2aad15c2be3a4436b7c3dfa7f072f6b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2370,11 +2382,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4298797442665466384, guid: 9a79e698642f2471f82d3594fb619da2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8117894227698995141, guid: 9a79e698642f2471f82d3594fb619da2, type: 3}
       propertyPath: m_Name
       value: AnimationSliderBinderAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 8117894227698995141, guid: 9a79e698642f2471f82d3594fb619da2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8137994208360649818, guid: 9a79e698642f2471f82d3594fb619da2, type: 3}
       propertyPath: m_Pivot.x
