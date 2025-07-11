@@ -9,6 +9,26 @@
     "/Applications/Unity/Hub/Editor/6000.0.48f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/BuiltInPackagesCombined.sha1"
   ],
   "outputs": {
+    "com.coffee.ui-effect@https://github.com/mob-sakai/UIEffect.git?path=Packages/src#5.9.0": {
+      "name": "com.coffee.ui-effect",
+      "displayName": "UI Effect",
+      "resolvedPath": "/Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.coffee.ui-effect@d5ca3c64fa9b",
+      "fingerprint": "d5ca3c64fa9b57141b3b39c2d443b6087d59ac70",
+      "editorCompatibility": "2020.3.0a1",
+      "version": "5.9.0",
+      "source": "git",
+      "testable": false
+    },
+    "com.coffee.ui-particle@https://github.com/mob-sakai/ParticleEffectForUGUI.git": {
+      "name": "com.coffee.ui-particle",
+      "displayName": "UI Particle",
+      "resolvedPath": "/Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.coffee.ui-particle@4b98abd7469b",
+      "fingerprint": "4b98abd7469b10d55c9c623830cb6e1518f72731",
+      "editorCompatibility": "2018.2.0a1",
+      "version": "4.11.2",
+      "source": "git",
+      "testable": false
+    },
     "com.unity.collab-proxy@2.8.2": {
       "name": "com.unity.collab-proxy",
       "displayName": "Version Control",
@@ -108,13 +128,13 @@
       "source": "builtin",
       "testable": false
     },
-    "com.unity.visualscripting@1.9.6": {
+    "com.unity.visualscripting@1.9.8": {
       "name": "com.unity.visualscripting",
       "displayName": "Visual Scripting",
-      "resolvedPath": "/Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.unity.visualscripting@7dcdc439b230",
-      "fingerprint": "7dcdc439b230145cec4202cd6ebad135736e0c14",
+      "resolvedPath": "/Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.unity.visualscripting@b4d700247d4b",
+      "fingerprint": "b4d700247d4b84b3360e1afeb054b0bdb201fbc7",
       "editorCompatibility": "2021.3.0a1",
-      "version": "1.9.6",
+      "version": "1.9.8",
       "source": "registry",
       "testable": false
     },

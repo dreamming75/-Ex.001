@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638878043260000000
-    m_Hash: 917470498
+      ticks: 638878050780000000
+    m_Hash: 2231244041
   m_LockFileStatus:
     m_FilePath: /Users/h/#Project_Git/#Ex.001/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638878043260000000
-    m_Hash: 564814177
+      ticks: 638878050780000000
+    m_Hash: 3946897647
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -22,6 +22,167 @@ m_LocalPackages:
 m_ProjectPath: /Users/h/#Project_Git/#Ex.001/Packages
 m_EditorVersion: 6000.0.48f1 (170d2541580d)
 m_ResolvedPackages:
+- packageId: com.coffee.ui-effect@https://github.com/mob-sakai/UIEffect.git?path=Packages/src#5.9.0
+  testable: 0
+  isDirectDependency: 1
+  version: 5.9.0
+  source: 5
+  resolvedPath: /Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.coffee.ui-effect@d5ca3c64fa9b
+  assetPath: Packages/com.coffee.ui-effect
+  name: com.coffee.ui-effect
+  displayName: UI Effect
+  author:
+    name: mob-sakai
+    email: sakai861104@gmail.com
+    url: https://github.com/mob-sakai
+  category: 
+  type: 
+  description: 'UIEffect is an open-source package that allows you to intuitively
+    apply rich UI effects directly from the Inspector or via code.
+
+    Combine various
+    filters, such as grayscale, blur, and dissolve, to decorate your UI with a unique
+    visual style!'
+  errors: []
+  versions:
+    all: []
+    compatible: []
+    recommended: 
+    deprecated: []
+  dependencies:
+  - name: com.unity.ugui
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.ugui
+    version: 2.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  keywords:
+  - ui
+  - effect
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 0
+  isAssetStorePackage: 0
+  datePublishedTicks: 0
+  documentationUrl: 
+  hasRepository: 1
+  repository:
+    type: git
+    url: git+https://github.com/mob-sakai/UIEffect.git
+    revision: 
+    path: 
+  unityLifecycle:
+    version: 
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: bbb5ae0f3e0389c797be1343f18634968bef18c0
+    revision: 5.9.0
+  upmReserved: 
+  assetStore:
+    productId: 
+  fingerprint: d5ca3c64fa9b57141b3b39c2d443b6087d59ac70
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 
+    minimumUnityVersion: 2020.3.0a1
+- packageId: com.coffee.ui-particle@https://github.com/mob-sakai/ParticleEffectForUGUI.git
+  testable: 0
+  isDirectDependency: 1
+  version: 4.11.2
+  source: 5
+  resolvedPath: /Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.coffee.ui-particle@4b98abd7469b
+  assetPath: Packages/com.coffee.ui-particle
+  name: com.coffee.ui-particle
+  displayName: UI Particle
+  author:
+    name: mob-sakai
+    email: sakai861104@gmail.com
+    url: https://github.com/mob-sakai
+  category: 
+  type: 
+  description: 'This package provides a component to render particle effects for
+    uGUI.
+
+    The particle rendering is maskable and sortable, without the need
+    for an extra Camera, RenderTexture, or Canvas.'
+  errors: []
+  versions:
+    all: []
+    compatible: []
+    recommended: 
+    deprecated: []
+  dependencies:
+  - name: com.unity.ugui
+    version: 1.0.0
+  - name: com.unity.modules.particlesystem
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.ugui
+    version: 2.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.modules.particlesystem
+    version: 1.0.0
+  keywords:
+  - ui
+  - particle
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 0
+  isAssetStorePackage: 0
+  datePublishedTicks: 0
+  documentationUrl: 
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.com/mob-sakai/ParticleEffectForUGUI.git
+    revision: 
+    path: 
+  unityLifecycle:
+    version: 
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 4b98abd7469b10d55c9c623830cb6e1518f72731
+    revision: HEAD
+  upmReserved: 
+  assetStore:
+    productId: 
+  fingerprint: 4b98abd7469b10d55c9c623830cb6e1518f72731
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 
+    minimumUnityVersion: 2018.2.0a1
 - packageId: com.unity.collab-proxy@2.8.2
   testable: 0
   isDirectDependency: 1
@@ -1365,12 +1526,12 @@ m_ResolvedPackages:
     compatibilityLevel: 0
     minimumPackageVersion: 2.0.0
     minimumUnityVersion: 2019.2.0a1
-- packageId: com.unity.visualscripting@1.9.6
+- packageId: com.unity.visualscripting@1.9.8
   testable: 0
   isDirectDependency: 1
-  version: 1.9.6
+  version: 1.9.8
   source: 1
-  resolvedPath: /Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.unity.visualscripting@7dcdc439b230
+  resolvedPath: /Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.unity.visualscripting@b4d700247d4b
   assetPath: Packages/com.unity.visualscripting
   name: com.unity.visualscripting
   displayName: Visual Scripting
@@ -1454,13 +1615,13 @@ m_ResolvedPackages:
   entitlements:
     licensingModel: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 638769546699650000
+  datePublishedTicks: 638852496803020000
   documentationUrl: 
   hasRepository: 1
   repository:
     type: git
     url: https://github.cds.internal.unity3d.com/unity/com.unity.visualscripting.git
-    revision: d24c56a75889cb6fe0046a9472368815d56d6bc7
+    revision: 2bb93a09becf00b2343d1c670afbf3836f170f55
     path: 
   unityLifecycle:
     version: 1.9.6
@@ -1473,26 +1634,12 @@ m_ResolvedPackages:
   git:
     hash: 
     revision: 
-  upmReserved: '{"changelog":"### Fixed\n- Fixed the output path for Property Providers
-    generated from User Editor code. [UVSB-2550](https://issuetracker.unity3d.com/product/unity/issues/guid/UVSB-2550)\n-
-    Fixed a minor spelling issue in the Project Settings section [UVSB-2523](https://issuetracker.unity3d.com/product/unity/issues/guid/UVSB-2523)\n-
-    Fixed an unexpected MissingComponentException thrown when using GetOrAddComponent
-    [UVSB-2575](https://jira.unity3d.com/browse/UVSB-2575)\n- Fixed scenes not reopening
-    after a Build when more than one Scene was opened and Visual Scripting with variables
-    is used. [UVSB-2561](https://jira.unity3d.com/browse/UVSB-2561)\n- Fixed values
-    of LocalizedAudioClip type being shown as None after selecting another game object
-    and returning back [UVSB-2528](https://jira.unity3d.com/browse/UVSB-2528)\n-
-    Fixed a compilation issue that happened when a project had another version of
-    NCalc already installed. [UVSB-2583](https://jira.unity3d.com/browse/UVSB-2583)\n-
-    Fixed an ''AudioMixerController'' is inaccessible due to its protection level''
-    error thrown when generating the AotStubs. [UVSB-2577](https://jira.unity3d.com/browse/UVSB-2577)\n-
-    Fixed compilation error when AotStubs references Unity.NetworkManager.__rpc_func_table
-    and Unity.NetworkManager.__rpc_name_table fields [UVSB-2563](https://issuetracker.unity3d.com/product/unity/issues/guid/UVSB-2563)\n\n###
-    Changed\n- Improved the warning message when a library fails to load while scanning
-    for Editor assemblies."}'
+  upmReserved: '{"changelog":"### Fixed\n- Fixed broken links to example codes in
+    API documentation.\n\n### Changed\n- Adds alt texts to images in documentation
+    to increase accessibility for screen readers."}'
   assetStore:
     productId: 
-  fingerprint: 7dcdc439b230145cec4202cd6ebad135736e0c14
+  fingerprint: b4d700247d4b84b3360e1afeb054b0bdb201fbc7
   editorCompatibility:
     compatibilityLevel: 0
     minimumPackageVersion: 1.9.6
