@@ -16,9 +16,9 @@ public class AutoStopRigidbody2D : MonoBehaviour
     void FixedUpdate()
     {
         // 이동 속도가 임계값보다 작으면 멈춤 처리
-        if (rb.velocity.magnitude < stopThreshold)
+        if (rb.linearVelocity.magnitude < stopThreshold)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
 
         // 회전 속도가 임계값보다 작으면 회전 멈춤 처리
