@@ -68,13 +68,13 @@
       "source": "registry",
       "testable": false
     },
-    "com.unity.inputsystem@1.14.0": {
+    "com.unity.inputsystem@1.14.1": {
       "name": "com.unity.inputsystem",
       "displayName": "Input System",
-      "resolvedPath": "/Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.unity.inputsystem@7fe8299111a7",
-      "fingerprint": "7fe8299111a78212d8968229ab41a82e4991ba25",
+      "resolvedPath": "/Users/h/#Project_Git/#Ex.001/Library/PackageCache/com.unity.inputsystem@978211393e28",
+      "fingerprint": "978211393e28699aba338ed157cef347ac565bbf",
       "editorCompatibility": "2021.3.0a1",
-      "version": "1.14.0",
+      "version": "1.14.1",
       "source": "registry",
       "testable": false
     },
