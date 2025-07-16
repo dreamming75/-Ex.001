@@ -14,7 +14,7 @@ public class SliderToAnimatorSnapBack : MonoBehaviour, IPointerDownHandler, IPoi
         animator = GetComponent<Animator>();
 
         // ===== [슬라이더 자동 생성] ===== //
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = Object.FindFirstObjectByType<Canvas>();
         if (canvas == null)
         {
             GameObject canvasGO = new GameObject("Canvas", typeof(Canvas));
