@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
 
     private TreasureBoxController controller;
 
+    public TMPNumberCounter scoreCounter;
+
     void Start()
     {
         // 필수 참조 체크
@@ -34,7 +36,8 @@ public class GameController : MonoBehaviour
         controller.Init(this);
         ToggleOpenClose(false);
 
-        scoreText.text = "0";
+        if (scoreCounter != null)
+            scoreCounter.gameObject.SetActive(false); // 처음엔 꺼둠
         boxButton.gameObject.SetActive(true);
         replayButton.gameObject.SetActive(false);
 
@@ -50,7 +53,11 @@ public class GameController : MonoBehaviour
     public void OnBoxOpened(int gold)
     {
         ToggleOpenClose(true);
-        scoreText.text = $"{gold}";
+        if (scoreCounter != null)
+        {
+            scoreCounter.gameObject.SetActive(true); // TMPNumberCounter가 붙은 오브젝트 활성화
+            scoreCounter.SetEndValueFromExternal(gold); // 카운트 애니메이션 시작
+        }
         boxButton.gameObject.SetActive(false);
         replayButton.gameObject.SetActive(true);
     }
@@ -59,7 +66,8 @@ public class GameController : MonoBehaviour
     {
         controller.Init(this);
         ToggleOpenClose(false);
-        scoreText.text = "";
+        if (scoreCounter != null)
+            scoreCounter.gameObject.SetActive(false); // 다시 끔
         boxButton.gameObject.SetActive(true);
         replayButton.gameObject.SetActive(false);
     }
