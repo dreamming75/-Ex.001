@@ -2673,6 +2673,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1350448730}
     m_Modifications:
+    - target: {fileID: 2087578274061696387, guid: fca41be716aa84541afcd215582f0f6b, type: 3}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 4634653630086701846, guid: b621654d885a54b3f85e0ebe01a1d018, type: 3}
+    - target: {fileID: 2087578274061696387, guid: fca41be716aa84541afcd215582f0f6b, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 2792839632696208601, guid: fca41be716aa84541afcd215582f0f6b, type: 3}
       propertyPath: m_Name
       value: FullTouchFx
