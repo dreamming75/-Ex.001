@@ -1612,6 +1612,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fx_RewardBox_Open
       objectReference: {fileID: 0}
+    - target: {fileID: 3571368615830930384, guid: 9c02e70c0ed0f4255ae60200b51bc0e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709513698727374436, guid: 9c02e70c0ed0f4255ae60200b51bc0e6, type: 3}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709513698727374436, guid: 9c02e70c0ed0f4255ae60200b51bc0e6, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7468138555089910394, guid: 9c02e70c0ed0f4255ae60200b51bc0e6, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1707,6 +1719,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7468138555089910394, guid: 9c02e70c0ed0f4255ae60200b51bc0e6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 204472537}
+    - targetCorrespondingSourceObject: {fileID: 9184762146336270518, guid: 9c02e70c0ed0f4255ae60200b51bc0e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2102128228}
   m_SourcePrefab: {fileID: 100100000, guid: 9c02e70c0ed0f4255ae60200b51bc0e6, type: 3}
 --- !u!224 &1866458187 stripped
 RectTransform:
@@ -1802,6 +1817,31 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &2102128222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9184762146336270518, guid: 9c02e70c0ed0f4255ae60200b51bc0e6, type: 3}
+  m_PrefabInstance: {fileID: 1866458186}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &2102128224 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 6654458237469112248, guid: 9c02e70c0ed0f4255ae60200b51bc0e6, type: 3}
+  m_PrefabInstance: {fileID: 1866458186}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2102128228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102128222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 226ac75e32a484adf8dd5c8fe5b06e3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 2102128224}
+  blockTime: 2
+  blockInputOnly: 0
 --- !u!1001 &2109974188
 PrefabInstance:
   m_ObjectHideFlags: 0
