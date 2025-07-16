@@ -210,7 +210,7 @@ RectTransform:
   m_Father: {fileID: 8030968511904282886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -524,7 +524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3423833573422822969
 RectTransform:
   m_ObjectHideFlags: 0
@@ -611,7 +611,7 @@ MonoBehaviour:
   prefabToUse: {fileID: 5419227263979772361, guid: cc2f76c976b874da4a1db415e029a951, type: 3}
   componentToggles:
   - componentTypeName: UnityEngine.UI.Image
-    enable: 1
+    enable: 0
   - componentTypeName: UnityEngine.Animation
     enable: 1
   targetParent: {fileID: 2075102093525622918}
