@@ -13,6 +13,9 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
     public AnimationClip snapAnimationClip;
     public AnimationClip dragAnimationClip;
 
+    [Header("처음 중앙에 올 Cell 인덱스")]
+    public int startCenterCellIndex = 0;
+
     private RectTransform currentCenterCell;
     private RectTransform snapActiveCell;
     private bool isDragging = false;
@@ -20,21 +23,28 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
 
     void Start()
     {
-        StartCoroutine(CenterFirstCell());
+        StartCoroutine(CenterStartCellAnimated());
     }
 
-    IEnumerator CenterFirstCell()
+    void OnEnable()
+    {
+        StartCoroutine(CenterStartCellAnimated());
+    }
+
+    IEnumerator CenterStartCellAnimated()
     {
         yield return null;
 
         RectTransform viewport = scrollRect.viewport;
         RectTransform content = scrollRect.content;
         GridLayoutGroup grid = content.GetComponent<GridLayoutGroup>();
-        if (grid == null) yield break;
+        if (grid == null || content.childCount == 0) yield break;
 
         Vector2 cellSize = grid.cellSize;
+        Vector2 spacing = grid.spacing;
         Vector2 viewportSize = viewport.rect.size;
 
+        // 가운데 정렬을 위한 padding 설정
         if (scrollRect.horizontal && !scrollRect.vertical)
         {
             float padding = (viewportSize.x - cellSize.x) / 2f;
@@ -49,8 +59,41 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(content);
-        scrollRect.horizontalNormalizedPosition = 0f;
-        scrollRect.verticalNormalizedPosition = 1f;
+        yield return null;
+
+        int targetIndex = Mathf.Clamp(startCenterCellIndex, 0, content.childCount - 1);
+        RectTransform targetCell = content.GetChild(targetIndex) as RectTransform;
+        if (targetCell == null) yield break;
+
+        Vector2 viewportCenterWorld = viewport.position;
+        Vector2 viewportCenterLocal = content.InverseTransformPoint(viewportCenterWorld);
+
+        Vector2 cellLocalPos = targetCell.localPosition;
+        Vector2 cellCenterLocal = cellLocalPos + new Vector2(
+            targetCell.rect.width * (0.5f - targetCell.pivot.x),
+            targetCell.rect.height * (0.5f - targetCell.pivot.y)
+        );
+
+        Vector2 offset = viewportCenterLocal - cellCenterLocal;
+        Vector2 targetAnchoredPos = content.anchoredPosition + offset;
+
+        Tween tween = null;
+        scrollRect.inertia = false;
+
+        if (scrollRect.horizontal && !scrollRect.vertical)
+            tween = content.DOAnchorPosX(targetAnchoredPos.x, snapDuration);
+        else if (scrollRect.vertical && !scrollRect.horizontal)
+            tween = content.DOAnchorPosY(targetAnchoredPos.y, snapDuration);
+        else
+            tween = content.DOAnchorPos(targetAnchoredPos, snapDuration); // 양방향 지원
+
+        if (tween != null)
+        {
+            tween.SetEase(Ease.OutCubic).OnComplete(() =>
+            {
+                scrollRect.inertia = true;
+            });
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -58,14 +101,12 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
         isDragging = true;
         snapExecutedForThisStop = false;
 
-        // Snap 애니메이션 중단
         if (snapActiveCell != null && snapActiveCell.childCount > 0)
         {
             var anim = snapActiveCell.GetChild(0).GetComponent<Animation>();
             if (anim != null) anim.Stop();
         }
 
-        // Drag 애니메이션 즉시 재생
         var centerCell = GetCenterCell();
         if (dragAnimationClip != null && centerCell != null && centerCell.childCount > 0)
         {
@@ -99,7 +140,6 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
             snapExecutedForThisStop = false;
         }
 
-        // Snap 애니메이션 실행
         if (centerCell != null && centerCell == currentCenterCell && isStopped && !isDragging && !snapExecutedForThisStop)
         {
             StartCoroutine(PlaySnapAnimationAfterDelay(centerCell));
@@ -144,7 +184,10 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
             if (cell == null) continue;
 
             Vector2 cellLocalPos = cell.localPosition;
-            Vector2 cellCenterLocal = cellLocalPos + new Vector2(cell.rect.width * (0.5f - cell.pivot.x), cell.rect.height * (0.5f - cell.pivot.y));
+            Vector2 cellCenterLocal = cellLocalPos + new Vector2(
+                cell.rect.width * (0.5f - cell.pivot.x),
+                cell.rect.height * (0.5f - cell.pivot.y)
+            );
 
             float distance = (scrollRect.horizontal && !scrollRect.vertical)
                 ? Mathf.Abs(cellCenterLocal.x - viewportCenterLocal.x)
@@ -164,8 +207,7 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
     {
         RectTransform viewport = scrollRect.viewport;
         RectTransform content = scrollRect.content;
-        GridLayoutGroup grid = content.GetComponent<GridLayoutGroup>();
-        if (grid == null || content.childCount == 0) return;
+        if (content.childCount == 0) return;
 
         Vector2 viewportCenterWorld = viewport.position;
         Vector2 viewportCenterLocal = content.InverseTransformPoint(viewportCenterWorld);
@@ -179,7 +221,10 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
             if (cell == null) continue;
 
             Vector2 cellLocalPos = cell.localPosition;
-            Vector2 cellCenterLocal = cellLocalPos + new Vector2(cell.rect.width * (0.5f - cell.pivot.x), cell.rect.height * (0.5f - cell.pivot.y));
+            Vector2 cellCenterLocal = cellLocalPos + new Vector2(
+                cell.rect.width * (0.5f - cell.pivot.x),
+                cell.rect.height * (0.5f - cell.pivot.y)
+            );
 
             float distance = (scrollRect.horizontal && !scrollRect.vertical)
                 ? Mathf.Abs(cellCenterLocal.x - viewportCenterLocal.x)
@@ -195,7 +240,11 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
         if (nearestCell != null)
         {
             Vector2 cellLocalPos = nearestCell.localPosition;
-            Vector2 cellCenterLocal = cellLocalPos + new Vector2(nearestCell.rect.width * (0.5f - nearestCell.pivot.x), nearestCell.rect.height * (0.5f - nearestCell.pivot.y));
+            Vector2 cellCenterLocal = cellLocalPos + new Vector2(
+                nearestCell.rect.width * (0.5f - nearestCell.pivot.x),
+                nearestCell.rect.height * (0.5f - nearestCell.pivot.y)
+            );
+
             Vector2 offset = viewportCenterLocal - cellCenterLocal;
             Vector2 targetAnchoredPos = content.anchoredPosition + offset;
 
@@ -207,10 +256,12 @@ public class CenterNearestCell_GridLayout : MonoBehaviour, IEndDragHandler, IBeg
                 tween = content.DOAnchorPosX(targetAnchoredPos.x, snapDuration);
             else if (scrollRect.vertical && !scrollRect.horizontal)
                 tween = content.DOAnchorPosY(targetAnchoredPos.y, snapDuration);
+            else
+                tween = content.DOAnchorPos(targetAnchoredPos, snapDuration);
 
             if (tween != null)
             {
-                tween.OnComplete(() =>
+                tween.SetEase(Ease.OutCubic).OnComplete(() =>
                 {
                     scrollRect.inertia = prevInertia;
                 });

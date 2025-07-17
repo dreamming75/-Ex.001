@@ -182,7 +182,7 @@ MonoBehaviour:
   snapAnimationDelay: 0.4
   snapAnimationClip: {fileID: 7400000, guid: 25bea470cdb994683bedfbfe067f348d, type: 2}
   dragAnimationClip: {fileID: 7400000, guid: 7bdbeb3e87f2b4b62a0d21ca5c51cf5d, type: 2}
-  dragAnimationDelay: 0
+  startCenterCellIndex: 2
 --- !u!1 &5463095512689183569
 GameObject:
   m_ObjectHideFlags: 0
