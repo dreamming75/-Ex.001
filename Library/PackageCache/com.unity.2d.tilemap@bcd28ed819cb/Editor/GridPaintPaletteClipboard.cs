@@ -239,27 +239,19 @@ namespace UnityEditor.Tilemaps
             }
         }
 
-        internal RectInt paddedViewBoundsInt
+        private RectInt paddedCellBoundsInt
         {
             get
             {
                 var rect = paddedCellBounds;
-
-                var orthographicSize = m_PreviewUtility.camera.orthographicSize;
-                var cameraBounds = new Vector3(orthographicSize * (m_GUIRect.width / m_GUIRect.height) * k_Padding, orthographicSize * k_Padding, 0f);
-                var camCellBounds = grid.LocalToCellInterpolated(cameraBounds);
-                var camSize = camCellBounds * 2f;
-
-                var sizeMax = new Vector2(Math.Max(rect.size.x, camSize.x), Math.Max(rect.size.y, camSize.y));
-
-                var min = Vector3Int.FloorToInt(rect.center - sizeMax * 0.5f);
-                var max = Vector3Int.CeilToInt(rect.center + sizeMax * 0.5f);
+                var min = Vector3Int.FloorToInt(rect.min);
+                var max = Vector3Int.CeilToInt(rect.max);
                 return new RectInt(min.x, min.y, max.x - min.x, max.y - min.y);
             }
         }
 
         // Max area we are ever showing. Depends on the zoom level and content of palette.
-        internal Rect paddedViewBounds
+        private Rect paddedBounds
         {
             get
             {
@@ -267,15 +259,6 @@ namespace UnityEditor.Tilemaps
                 var localBounds = grid.GetBoundsLocal(
                     new Vector3(rect.xMin, rect.yMin, 0.0f),
                     new Vector3(rect.size.x, rect.size.y, 0.0f));
-
-                var orthographicSize = m_PreviewUtility.camera.orthographicSize;
-                var cameraBounds = new Vector3(orthographicSize * (m_GUIRect.width / m_GUIRect.height) * k_Padding, orthographicSize * k_Padding, 0f) * 2f;
-
-                var size = localBounds.size;
-                size.x = Mathf.Max(cameraBounds.x, localBounds.size.x);
-                size.y = Mathf.Max(cameraBounds.y, localBounds.size.y);
-                localBounds.size = size;
-
                 var result = new Rect(
                     new Vector2(localBounds.min.x, localBounds.min.y),
                     new Vector2(localBounds.size.x, localBounds.size.y));
@@ -1522,7 +1505,7 @@ namespace UnityEditor.Tilemaps
 
             var cam = m_PreviewUtility.camera;
             var cameraOrthographicSize = cam.orthographicSize;
-            var r = paddedViewBounds;
+            var r = paddedBounds;
 
             var camPos = cam.transform.position;
             var camLimit = Grid.Swizzle(m_CameraSwizzleView, new Vector3(cameraOrthographicSize * (guiRect.width / guiRect.height), cameraOrthographicSize));
@@ -1660,7 +1643,7 @@ namespace UnityEditor.Tilemaps
             // MeshTopology.Lines doesn't give nice pixel perfect grid so we have to have separate codepath with MeshTopology.Quads specially for palette window here
             if (m_GridMesh == null && grid.cellLayout == GridLayout.CellLayout.Rectangle)
             {
-                m_GridMesh = GridEditorUtility.GenerateCachedGridMesh(grid, k_GridColor, 1f / LocalToScreenRatio(), paddedViewBoundsInt, grid.cellSwizzle == GridLayout.CellSwizzle.XYZ ? MeshTopology.Quads : MeshTopology.Lines);
+                m_GridMesh = GridEditorUtility.GenerateCachedGridMesh(grid, k_GridColor, 1f / LocalToScreenRatio(), paddedCellBoundsInt, grid.cellSwizzle == GridLayout.CellSwizzle.XYZ ? MeshTopology.Quads : MeshTopology.Lines);
             }
             GridEditorUtility.DrawGridGizmo(grid, grid.transform, k_GridColor, ref m_GridMesh, ref m_GridMaterial, true);
         }

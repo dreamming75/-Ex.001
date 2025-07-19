@@ -36,7 +36,6 @@ namespace UnityEditor.U2D.Sprites
             set => m_PotentialRects = value;
         }
         internal static Func<string, string, string, string, string, int> onShowComplexDialog = EditorUtility.DisplayDialogComplex;
-        internal static Func<string, string, string, string, bool> onShowDialog = EditorUtility.DisplayDialog;
         public SpriteFrameModule(ISpriteEditor sw, IEventSystem es, IUndoSystem us, IAssetDatabase ad) :
             base("Sprite Editor", sw, es, us, ad)
         {}
@@ -133,12 +132,8 @@ namespace UnityEditor.U2D.Sprites
                 m_SpriteRectValidated = true;
                 int width, height;
                 m_TextureDataProvider.GetTextureActualWidthAndHeight(out width, out height);
-                HashSet<GUID> spriteIDs = new HashSet<GUID>();
-                var emptyGuid = new GUID();
-                List<SpriteRect> updatedSpriteRectID = new List<SpriteRect>();
                 for (int i = 0; i < m_RectsCache.spriteRects.Count; ++i)
                 {
-                    // Validate rect is still within the bounds of the texture
                     var s = m_RectsCache.spriteRects[i];
                     if(s.rect.x < 0 || s.rect.y < 0 || s.rect.xMax > width || s.rect.yMax > height)
                     {
@@ -156,24 +151,6 @@ namespace UnityEditor.U2D.Sprites
                                 break;
                         }
                     }
-
-                    // Validate sprite id uniqueness
-                    var spriteId = s.spriteID;
-                    if (spriteId == emptyGuid || spriteIDs.Contains(spriteId))
-                    {
-                        if (onShowDialog("Invalid Sprite ID", $"Sprite Rect {s.name} has an invalid ID.\nSprite with invalid ID can result in Sprite reference breakage.", "Reassign ID", "Keep"))
-                        {
-                            updatedSpriteRectID.Add(s);
-                        }
-                    }
-                    spriteIDs.Add(spriteId);
-                }
-                for(int i = 0; i < updatedSpriteRectID.Count; ++i)
-                {
-                    m_RectsCache.Remove(updatedSpriteRectID[i]);
-                    updatedSpriteRectID[i].spriteID = GUID.Generate();
-                    m_RectsCache.Add(updatedSpriteRectID[i], true);
-                    SetDataModified();
                 }
             }
         }

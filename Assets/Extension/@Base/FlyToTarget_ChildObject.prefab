@@ -212,12 +212,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 8883522585293155652}
     m_Modifications:
     - target: {fileID: 1634922490911278493, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634922490911278493, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
       propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4634653630086701846, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
       propertyPath: m_Name
       value: Fx_Trail
+      objectReference: {fileID: 0}
+    - target: {fileID: 4634653630086701846, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5493264044435988373, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5493264044435988373, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
       propertyPath: m_SortingLayer
@@ -308,8 +320,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7754859621577315118, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7754859621577315118, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
       propertyPath: m_SortingLayer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9098024042946178014, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9098024042946178014, guid: 5b2168651ffee4ea9bfe410055f7ec9a, type: 3}
       propertyPath: m_SortingLayer

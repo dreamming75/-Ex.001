@@ -225,17 +225,6 @@ namespace UnityEditor.U2D.Sprites
                 SpriteEditorWindow.GetWindow(x);
                 return true;
             });
-            EditorGUI.hyperLinkClicked -= OpenSpriteEditorWindowFromHyperLink;
-            EditorGUI.hyperLinkClicked += OpenSpriteEditorWindowFromHyperLink;
-        }
-
-        static void OpenSpriteEditorWindowFromHyperLink(EditorWindow arg1, HyperLinkClickedEventArgs arg2)
-        {
-            if (arg2.hyperLinkData.ContainsKey("openspriteeditorwindow"))
-            {
-                var path = arg2.hyperLinkData["openspriteeditorwindow"];
-                UnityEditor.SpriteUtilityWindow.ShowSpriteEditorWindow(AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(path));
-            }
         }
 
         private class SpriteEditorWindowStyles
@@ -300,7 +289,7 @@ namespace UnityEditor.U2D.Sprites
         VisualElement m_ToolbarContainer;
         VisualElement m_ModuleToolbarContainer;
         VisualElement m_AlphaZoomToolbarElement;
-        DropdownField m_ModuleDropDownUI;
+        VisualElement m_ModuleDropDownUI;
         private IMGUIContainer m_ModuleToolbarIMGUIElement;
         private IMGUIContainer m_MainViewIMGUIElement;
         private VisualElement m_ModuleViewElement;
@@ -598,21 +587,21 @@ namespace UnityEditor.U2D.Sprites
             }
         }
 
-        private void ShowButton(Rect r)
-        {
-            EditorGUI.BeginChangeCheck();
-            this.m_LockTracker.ShowButton(r, (GUIStyle) "IN LockButton", false);
-            if (!EditorGUI.EndChangeCheck())
-                return;
-            OnSelectionChange();
-        }
+		private void ShowButton(Rect r)
+    	{
+      		EditorGUI.BeginChangeCheck();
+      		this.m_LockTracker.ShowButton(r, (GUIStyle) "IN LockButton", false);
+      		if (!EditorGUI.EndChangeCheck())
+        		return;
+      		OnSelectionChange();
+    	}
 
         private bool SetupVisualElements()
         {
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(SpriteEditorWindowStyles.styleSheetPath);
             if (styleSheet != null && rootVisualElement != null && rootVisualElement.styleSheetList != null)
             {
-                m_ToolbarContainer = new UIElements.Toolbar()
+                m_ToolbarContainer = new VisualElement()
                 {
                     name = "spriteEditorWindowToolbarContainer"
                 };
@@ -620,19 +609,11 @@ namespace UnityEditor.U2D.Sprites
                 {
                     name = "spriteEditorWindowModuleToolbarContainer"
                 };
-                m_ModuleDropDownUI = new DropdownField()
+                m_ModuleDropDownUI = new IMGUIContainer(DoModuleDropDownGUI)
                 {
                     name = "spriteEditorWindowModuleDropDown",
                 };
                 m_ModuleDropDownUI.style.display = m_Texture == null || m_RegisteredModules?.Count <= 0 ? DisplayStyle.None : DisplayStyle.Flex;
-                m_ModuleDropDownUI.focusable = false;
-                m_ModuleDropDownUI.RegisterValueChangedCallback(OnModuleDropDownValueChanged);
-                if (m_RegisteredModuleNames?.Count > 0 && m_CurrentModuleIndex >= 0 && m_CurrentModuleIndex < m_RegisteredModuleNames.Count)
-                {
-                    m_ModuleDropDownUI.choices = m_RegisteredModuleNames;
-                    m_ModuleDropDownUI.SetValueWithoutNotify(m_RegisteredModuleNames[m_CurrentModuleIndex]);
-                }
-
                 var moduleApplyRevertGUI = new IMGUIContainer(DoApplyRevertGUI)
                 {
                     name = "spriteEditorWindowApplyRevert"
@@ -935,14 +916,17 @@ namespace UnityEditor.U2D.Sprites
             }
         }
 
-        private void OnModuleDropDownValueChanged(ChangeEvent<string> value)
+        private void DoModuleDropDownGUI()
         {
+            InitStyles();
+
             if (!activeDataProviderSelected || m_CurrentModule == null)
                 return;
 
             if (m_RegisteredModules.Count > 1)
             {
-                if (m_ModuleDropDownUI.index != m_CurrentModuleIndex)
+                int module = EditorGUILayout.Popup(m_CurrentModuleIndex, m_RegisteredModuleNames, EditorStyles.toolbarPopup);
+                if (module != m_CurrentModuleIndex)
                 {
                     if (textureIsDirty)
                     {
@@ -954,7 +938,7 @@ namespace UnityEditor.U2D.Sprites
                         else
                             DoRevert();
                     }
-                    SetupModule(m_ModuleDropDownUI.index);
+                    SetupModule(module);
                 }
             }
         }
@@ -1192,7 +1176,7 @@ namespace UnityEditor.U2D.Sprites
             }
         }
 
-        List<string> m_RegisteredModuleNames;
+        GUIContent[] m_RegisteredModuleNames;
         List<SpriteEditorModuleBase> m_AllRegisteredModules;
         List<SpriteEditorModuleBase> m_RegisteredModules;
         SpriteEditorModuleBase m_CurrentModule = null;
@@ -1212,11 +1196,6 @@ namespace UnityEditor.U2D.Sprites
             if (m_RegisteredModules.Count > newModuleIndex && newModuleIndex >= 0)
             {
                 m_CurrentModuleIndex = newModuleIndex;
-                if (m_ModuleDropDownUI != null)
-                {
-                    m_ModuleDropDownUI.SetValueWithoutNotify(m_ModuleDropDownUI.choices[m_CurrentModuleIndex]);
-                    m_ModuleDropDownUI.tooltip = m_RegisteredModules[m_CurrentModuleIndex].moduleName;
-                }
                 m_CurrentModule = m_RegisteredModules[newModuleIndex];
                 // if there are any modes for the module
                 List<Type> modes;
@@ -1257,10 +1236,10 @@ namespace UnityEditor.U2D.Sprites
                 }
 
                 lastUsedModuleIndex = 0;
-                m_RegisteredModuleNames = new List<string>();
+                m_RegisteredModuleNames = new GUIContent[m_RegisteredModules.Count];
                 for (int i = 0; i < m_RegisteredModules.Count; i++)
                 {
-                    m_RegisteredModuleNames.Add(m_RegisteredModules[i].moduleName);
+                    m_RegisteredModuleNames[i] = new GUIContent(m_RegisteredModules[i].moduleName);
                     if (m_RegisteredModules[i].GetType().FullName.Equals(m_LastUsedModuleTypeName))
                     {
                         lastUsedModuleIndex = i;
@@ -1270,9 +1249,8 @@ namespace UnityEditor.U2D.Sprites
 
             if (m_ModuleDropDownUI != null)
             {
-                m_ModuleDropDownUI.style.display = m_RegisteredModuleNames?.Count > 1 ? DisplayStyle.Flex : DisplayStyle.None;
-                m_ModuleDropDownUI.style.position = m_RegisteredModuleNames?.Count > 1 ? Position.Relative : Position.Absolute;
-                m_ModuleDropDownUI.choices = m_RegisteredModuleNames ?? new List<string>();
+                m_ModuleDropDownUI.style.display = m_RegisteredModuleNames?.Length > 1 ? DisplayStyle.Flex : DisplayStyle.None;
+                m_ModuleDropDownUI.style.position = m_RegisteredModuleNames?.Length > 1 ? Position.Relative : Position.Absolute;
             }
 
             SetupModule(lastUsedModuleIndex);

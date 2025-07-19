@@ -392,9 +392,7 @@ namespace UnityEditor.Tilemaps
 
             pm.AddSeparator("");
 
-            if (!GridPaintingState.isPaletteEditable)
-                pm.AddDisabledItem(Styles.unlockPaletteEditing);
-            else if (clipboardView.unlocked)
+            if (clipboardView.unlocked)
                 pm.AddItem(Styles.lockPaletteEditing, false, FlipLocked);
             else
                 pm.AddItem(Styles.unlockPaletteEditing, false, FlipLocked);

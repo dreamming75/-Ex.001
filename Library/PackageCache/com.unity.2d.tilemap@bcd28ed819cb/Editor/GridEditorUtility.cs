@@ -343,15 +343,6 @@ namespace UnityEditor.Tilemaps
             return Vector3.one;
         }
 
-        internal static RectInt GetMaximumRectGrid()
-        {
-            var min = k_GridGizmoVertexCount / -32;
-            var max = min * -1;
-            var numCells = max - min;
-            var bounds = new RectInt(min, min, numCells, numCells);
-            return bounds;
-        }
-
         private static Mesh GenerateCachedGridMesh(GridLayout gridLayout, Color color)
         {
             switch (gridLayout.cellLayout)
@@ -361,7 +352,12 @@ namespace UnityEditor.Tilemaps
                 case GridLayout.CellLayout.Isometric:
                 case GridLayout.CellLayout.IsometricZAsY:
                 case GridLayout.CellLayout.Rectangle:
-                    return GenerateCachedGridMesh(gridLayout, color, 0f, GetMaximumRectGrid(), MeshTopology.Lines);
+                    var min = k_GridGizmoVertexCount / -32;
+                    var max = min * -1;
+                    var numCells = max - min;
+                    var bounds = new RectInt(min, min, numCells, numCells);
+
+                    return GenerateCachedGridMesh(gridLayout, color, 0f, bounds, MeshTopology.Lines);
             }
             return null;
         }
