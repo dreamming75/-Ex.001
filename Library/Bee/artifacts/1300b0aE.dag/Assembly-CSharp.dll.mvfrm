@@ -112,6 +112,10 @@ FullScreenPassRendererFeature
 
 RenderQueueType
 RenderObjects
+SVGImageEditor
+
+SVGImage
+
 AssetModificationProcessor
 
 Sysroot
