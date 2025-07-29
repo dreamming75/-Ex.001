@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 
 namespace H
@@ -9,6 +10,16 @@ namespace H
     {
         [Header("Target with Animation Component")]
         public Animation targetAnimation;
+
+        [Header("Text Display")]
+        public TextMeshProUGUI valueText; // 슬라이더 값을 표시할 TextMeshProUGUI 컴포넌트
+        public int decimalPlaces = 1; // 소수점 자릿수
+        public bool showPercentage = true; // % 기호 표시 여부
+
+        [Header("Current/Total Value Display")]
+        public TextMeshProUGUI currentValueText; // 현재값을 표시할 TextMeshProUGUI 컴포넌트
+        public TextMeshProUGUI totalValueText; // 전체값을 표시할 TextMeshProUGUI 컴포넌트
+        public float totalValue = 100f; // 전체값 설정
 
         [Header("Lerp Duration (seconds)")]
         public float duration = 0.1f;
@@ -44,12 +55,19 @@ namespace H
             }
 
             _initialized = true;
+            
+            // 초기 Text 값 설정
+            UpdateValueText(_slider.value);
+            UpdateTotalValueText();
         }
 
         private void OnSliderChanged(float value)
         {
             if (!_initialized) Initialize();
             if (_state == null) return;
+
+            // Text 값 업데이트
+            UpdateValueText(value);
 
             float targetTime = Mathf.Clamp01(value / 100f);
 
@@ -85,6 +103,37 @@ namespace H
             _state.normalizedTime = targetNormalizedTime;
             targetAnimation.Sample();
             _state.enabled = false;
+        }
+
+        private void UpdateValueText(float value)
+        {
+            if (valueText != null)
+            {
+                string format = "F" + decimalPlaces.ToString();
+                string displayText = value.ToString(format);
+                if (showPercentage)
+                {
+                    displayText += "%";
+                }
+                valueText.text = displayText;
+            }
+
+            // 현재값 텍스트 업데이트
+            if (currentValueText != null)
+            {
+                string format = "F" + decimalPlaces.ToString();
+                float currentValue = (value / 100f) * totalValue;
+                currentValueText.text = currentValue.ToString(format);
+            }
+        }
+
+        private void UpdateTotalValueText()
+        {
+            if (totalValueText != null)
+            {
+                string format = "F" + decimalPlaces.ToString();
+                totalValueText.text = totalValue.ToString(format);
+            }
         }
     }
 }
